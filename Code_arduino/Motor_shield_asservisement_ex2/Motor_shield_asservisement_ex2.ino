@@ -2,8 +2,13 @@
 // Pins used on Arduino Uno
 
 #include <Wire.h>
+//============================================ IO Pins ============================================
+// Pins used on Arduino Uno
+
+#include <Wire.h>
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
+
 
 #define rEncoder 2
 #define lEncoder 3
@@ -75,6 +80,8 @@ void setup(){
   
   pinMode(4,INPUT_PULLUP); // pin pour test
   pinMode(5,INPUT_PULLUP);
+  pinMode(12,INPUT_PULLUP);
+  
  
   // Enable the pull up resistors for the encoders
   digitalWrite(rEncoder, HIGH);
@@ -89,12 +96,12 @@ void setup(){
   pinMode(TRIGGER_PIN, OUTPUT);
   digitalWrite(TRIGGER_PIN, LOW); // La broche TRIGGER doit être à LOW au repos
   pinMode(ECHO_PIN, INPUT);
-  //ULTRASON 1
-  pinMode(TRIGGER_PIN1, OUTPUT);
+//ULTRASON 1
+ pinMode(TRIGGER_PIN1, OUTPUT);
   digitalWrite(TRIGGER_PIN1, LOW); // La broche TRIGGER doit être à LOW au repos
   pinMode(ECHO_PIN1, INPUT);
-  //ULTRASON 2
-  pinMode(TRIGGER_PIN2, OUTPUT);
+//ULTRASON 2
+pinMode(TRIGGER_PIN2, OUTPUT);
   digitalWrite(TRIGGER_PIN2, LOW); // La broche TRIGGER doit être à LOW au repos
   pinMode(ECHO_PIN2, INPUT);
   
@@ -109,24 +116,40 @@ if ( currentMillis-previousMillis>= interval){
    previousMillis=currentMillis;
    calculPid(rotation,lineaire);//setPointRot[rad/s] et  setPointLin [mm/s] 
 
-   ultrason0();
-   ultrason1();
-   ultrason2();
+ ultrason0();
+ ultrason1();
+ ultrason2();
+
+ 
 }
 
-if(digitalRead(4)==0){ // ici viens la commande aller tout droit de la raspbery
+  if(digitalRead(4)==0){ // ici viens la commande aller tout droit de la raspbery
    rotation=0;
-   lineaire=350;
+   lineaire=350;//350
    goStraigth();
   }
-else if(digitalRead(5)==0){// ici viens la commande tourner à droite de la raspbery
-   rotation=20;
+  else if(digitalRead(5)==0){// ici viens la commande aller à droite de la raspbery
+  
+    rotation=20;// si signe +, tourne à droite
    lineaire=0;
-   turnRight();
+  turn();
+  delay(250);
   }
-else{
-   Stop(); 
+  else if(digitalRead(12)==0){// ici viens la commande aller à gauche de la raspbery
+  
+   rotation=-20;// si signe -, tourne à gauche 
+   lineaire=0;
+  turn();
+  delay(250);
+  
   }
+  else{
+   Stop();
+    
+  }
+
+
+
 }
 
 void ultrason0(){
@@ -147,9 +170,10 @@ void ultrason0(){
   Serial.print(distance_mm);
   }
 
-void ultrason1(){
+  void ultrason1(){
+  
   ////////////////////////////////////////////ULTRASON 1//////////////////////////////////////////////
-  digitalWrite(TRIGGER_PIN1, HIGH);
+digitalWrite(TRIGGER_PIN1, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIGGER_PIN1, LOW); 
 
@@ -158,11 +182,13 @@ void ultrason1(){
   float distance_mm1 = measure1 / 2.0 * SOUND_SPEED;
   Serial.print(F("Distance 1: "));
   Serial.print(distance_mm1);
+  
+  
+  
   }
-
-void ultrason2(){
+  void ultrason2(){
   ////////////////////////////////////////////ULTRASON 2//////////////////////////////////////////////
-  digitalWrite(TRIGGER_PIN2, HIGH);
+digitalWrite(TRIGGER_PIN2, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIGGER_PIN2, LOW); 
 
@@ -171,10 +197,14 @@ void ultrason2(){
   float distance_mm2 = measure2 / 2.0 * SOUND_SPEED;
   Serial.print(F("Distance 2: "));
   Serial.println(distance_mm2);
+  
+  
   }
  
   
 void calculPid(double setPointRot, double setPointLin){
+  
+         
            Serial.println("PID");
         inputG = leftWheel;
         double vitG= ((inputG*10*20.7)/20); //inputG = le nombre de ticks pour 0.1s  et vitG la vitesse en tr/s car *10 pour 1sec et /20 pr 1tr et *20.7 pour passer de tr/s à mm/s
@@ -234,8 +264,14 @@ void calculPid(double setPointRot, double setPointLin){
       
         somPid= (outputsPid[0]+outputsPid[1] ); // Rot+Lin  => M1=Droite
         diffPid= (outputsPid[1]-outputsPid[0]); // Lin -Rot => M2=Gauche
+
+  
+
 }
-void turnRight(){
+
+  
+ 
+void turn(){
   
 Serial.println("je tourne");
 if(somPid<0){
