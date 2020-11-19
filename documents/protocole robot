@@ -1,2 +1,13 @@
-- recois de l'arduino : left/right/front us sensor.
-- envois la direction ou doit aller le robot : turn left/turn right/forward.
+5 fonctions sont accessibles dans l'arduino : 
+  go_forward, turn_right, turn_left, regul_right, regul_left
+  
+Par direction, il y a deux variables responsables de la plausibilité des valeurs capteur :
+  - une variable temporaire (exple left_1) chargée par la valeur reçue régulièrement du capteur
+  - une variable buffer (exple left_2) chargée par left_1
+  Une fonction compare les deux left_ à chaque réception d'une nouvelle valeur d'un capteur et vérifie si la valeur absolue de leur différence diffère d'un seuil.
+
+
+- reçoit de l'arduino : right/left/front us sensor.
+  format : liste type ["right","xx","left","xx","front","xx"]
+- envoie la direction où doit aller le robot : 
+  format : to_arduino_b.encode()  # a: forward, les autres sont les 4 fonctions accessibles dans l'arduino (voir 1e ligne)
