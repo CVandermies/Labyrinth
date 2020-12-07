@@ -1,19 +1,28 @@
-Mettre les grandes lignes de décision (algorithmique) dans le Rpi et mettre tout le code propre aux capteurs dans l'arduino
+Il faut un suiveur de ligne: on ne connaitra pas la distance entre les 2 murs or notre robot doit ï¿½tre apte ï¿½ rï¿½soudre le labyrinthe dï¿½s que le prof nous prï¿½sente le parcours final
+donc les paramï¿½tres wallDistance et wallFront n'auront pas pu ï¿½tre rï¿½glï¿½s
+
+Idï¿½alement mettre trois capteur ultrason (un dans chaque direction) car solution servo bancale avec angle du servo et mouvement qui risque de le faire 
+
+Besoin de 2 capteurs infrarouge suiveurs de ligne.
+On active les US Ã  intervalles rÃ©guliers (genre toutes les 0,5sec) et en rÃ¨gle gÃ©nÃ©rale le robot suit la ligne.
+On fait une fonction quart de tour qui s'exÃ©cutera deux fois consÃ©cutives dans le cas d'un cul de sac (pas de demi tour).
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Mettre les grandes lignes de dÃ©cision (algorithmique) dans le Rpi et mettre tout le code propre aux capteurs dans l'arduino
 
 mettre rasp en Access point 
 Xming pour ecran
 
-( Trouver un système de communication (réponse adaptable) entre code python et suivi graphique )
+( Trouver un systÃ¨me de communication (rÃ©ponse adaptable) entre code python et suivi graphique )
 
 
 CaptA fixe suit le mur de droite
-captB monté sur servo regarde vers l'avant et si B détecte un mur à moins d'une certaine dist, regarde à gauche si mur ou pas 
+captB montÃ© sur servo regarde vers l'avant et si B dÃ©tecte un mur Ã  moins d'une certaine dist, regarde Ã  gauche si mur ou pas 
 		si oui et mur a droite : signifie cul de sac ==> demi tour
-		si non et mur à droite : tourner à gauche
+		si non et mur Ã  droite : tourner Ã  gauche
 
 Finias Calugar: Le robot doit suivre le mur de droite a distance constante
-Yassin Souidi: Le robot fait demi-tour quand il détecte un cul-de-sac
+Yassin Souidi: Le robot fait demi-tour quand il dÃ©tecte un cul-de-sac
 Abas Sliti: suite du design PCB et recherche design 3D servo moteur et ultrasons
-Jonathan Miel: Envoi et interprétation des résultats du capteur US + mettre rasp en Access point
-Charles Vandermies: Commencer à implémenter la situation de l'intersection 
-Robert François: Commencer à implémenter la situation du cul de sac
+Jonathan Miel: Envoi et interprÃ©tation des rÃ©sultats du capteur US + mettre rasp en Access point
+Charles Vandermies: Commencer Ã  implÃ©menter la situation de l'intersection 
+Robert FranÃ§ois: Commencer Ã  implÃ©menter la situation du cul de sac
