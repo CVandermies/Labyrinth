@@ -1,8 +1,0 @@
-Il faut un suiveur de ligne: on ne connaitra pas la distance entre les 2 murs or notre robot doit �tre apte � r�soudre le labyrinthe d�s que le prof nous pr�sente le parcours final
-donc les param�tres wallDistance et wallFront n'auront pas pu �tre r�gl�s
-
-Id�alement mettre trois capteur ultrason (un dans chaque direction) car solution servo bancale avec angle du servo et mouvement qui risque de le faire 
-
-Besoin de 2 capteurs infrarouge suiveurs de ligne.
-On active les US à intervalles réguliers (genre toutes les 0,5sec) et en règle générale le robot suit la ligne.
-On fait une fonction quart de tour qui s'exécutera deux fois consécutives dans le cas d'un cul de sac (pas de demi tour).
